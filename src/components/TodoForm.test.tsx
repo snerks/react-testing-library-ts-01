@@ -25,14 +25,18 @@ test('Clicking ok button sets stored Todo Item', () => {
     const todoInput = getByPlaceholderText("todo...");
     const okButton = getByText("OK");
 
-    const todoItemElement = getByTestId("todoItems");
+    const todoItemsElement = getByTestId("todoItems");
 
     const expectedTodoItemText = "Use react-testing-library";
 
     fireEvent.change(todoInput, { target: { value: expectedTodoItemText } });
     fireEvent.click(okButton);
 
-    expect(todoItemElement).toHaveTextContent(expectedTodoItemText);
+    // expect(todoItemsElement).toHaveTextContent(expectedTodoItemText);
 
-    screen.debug(todoItemElement);
+    const todoItemElements = todoItemsElement.getElementsByTagName("li");
+    expect(todoItemElements).toHaveLength(1);
+    expect(todoItemElements[0]).toHaveTextContent(expectedTodoItemText);
+
+    screen.debug(todoItemsElement);
 });
