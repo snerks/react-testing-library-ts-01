@@ -7,13 +7,25 @@ const TodoForm: React.FC<Props> = () => {
     const [todoItem, setTodoItem] = useState("");
     const [todoItems, setTodoItems] = useState<string[]>([]);
 
+    const handleTodoInputChange = (e: any) => {
+        console.log("handleTodoInputChange", "[" + e.target.value + "]");
+
+        setTodoItem(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        setTodoItems([...todoItems, todoItem]);
+        setTodoItem("");
+    };
+
     return (
         <div>
-            <input placeholder="todo..." onChange={(e: any) => setTodoItem(e.target.value)} />
-            {/* <input placeholder="todo..." /> */}
+            <input type="text" placeholder="todo..." value={todoItem} onChange={handleTodoInputChange} />
 
-            <button type="button" onClick={() => setTodoItems([...todoItems, todoItem])}>OK</button>
-            {/* <button type="button">OK</button> */}
+            <button
+                type="button"
+                disabled={!todoItem}
+                onClick={handleSubmit}>OK</button>
 
             <ul data-testid="todoItems">
                 {todoItems && todoItems.map((todoItem, index) => <li key={index}>{todoItem}</li>)}
